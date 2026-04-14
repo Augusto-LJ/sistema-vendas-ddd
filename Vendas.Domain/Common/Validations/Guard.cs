@@ -8,6 +8,13 @@ internal static class Guard
         if (value is null)
             throw new DomainException($"{paramName} não pode ser nulo");
     }
+
+    public static void AgainstNullOrWhiteSpace(string value, string paramName)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            throw new DomainException($"{paramName} não pode ser nulo nem vazio");
+    }
+
     public static void AgainstEmptyGuid(Guid id, string paramName)
     {
         if (id == Guid.Empty)
