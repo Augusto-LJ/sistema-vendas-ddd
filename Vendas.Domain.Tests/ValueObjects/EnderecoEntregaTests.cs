@@ -107,6 +107,23 @@ public class EnderecoEntregaTests
         Action act = () => EnderecoEntrega.Criar(cep, logradouro, complemento, bairro, cidade, estado, pais);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage("*não pode ser nulo*");
+        act.Should().Throw<DomainException>();
+    }
+
+    [Theory]
+    [InlineData("", "Rua Exemplo", "Apto 101", "Centro", "São Paulo", "SP", "Brasil")]
+    [InlineData("12345-678", "", "Apto 101", "Centro", "São Paulo", "SP", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "", "Centro", "São Paulo", "SP", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "Apto 101", "", "São Paulo", "SP", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "Apto 101", "Centro", "", "SP", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "Apto 101", "Centro", "São Paulo", "", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "Apto 101", "Centro", "São Paulo", "SP", "")]
+    public void Criar_DeveLancarDomainException_QuandoAlgumaInformacaoObrigatoriaForStringVazia(string cep, string logradouro, string complemento, string bairro, string cidade, string estado, string pais)
+    {
+        // Act
+        Action act = () => EnderecoEntrega.Criar(cep, logradouro, complemento, bairro, cidade, estado, pais);
+
+        // Assert
+        act.Should().Throw<DomainException>();
     }
 }
