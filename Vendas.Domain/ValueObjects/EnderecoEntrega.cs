@@ -55,6 +55,6 @@ public class EnderecoEntrega : ValueObject
 
     public string FormatarEndereco()
     {
-               return $"{Logradouro}, {Complemento} - {Bairro}, {Cidade} - {Estado}, {Pais} - CEP: {Cep}";
+        return $"{Logradouro}, {Complemento} - {Bairro}, {Cidade} - {Estado}, {Pais} - CEP: {Cep}";
     }
 }

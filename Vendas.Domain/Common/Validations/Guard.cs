@@ -9,16 +9,16 @@ internal static class Guard
             throw new DomainException($"{paramName} não pode ser nulo");
     }
 
-    public static void AgainstNullOrWhiteSpace(string value, string paramName)
+    public static void AgainstNullOrWhiteSpace(string value, string paramName, string? message = null)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new DomainException($"{paramName} não pode ser nulo nem vazio");
+            throw new DomainException(message ?? $"{paramName} não pode ser nulo nem vazio");
     }
 
-    public static void AgainstEmptyGuid(Guid id, string paramName)
+    public static void AgainstEmptyGuid(Guid id, string paramName, string? message = null)
     {
         if (id == Guid.Empty)
-            throw new DomainException($"{paramName} não pode ser Guid.Empty");
+            throw new DomainException(message ?? $"{paramName} não pode ser Guid.Empty");
     }
 
     public static void Against<TException>(bool condition, string message) where TException : Exception
