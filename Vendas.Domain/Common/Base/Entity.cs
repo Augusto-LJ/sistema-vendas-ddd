@@ -1,4 +1,7 @@
-﻿namespace Vendas.Domain.Common.Base;
+﻿using System.Xml.Serialization;
+using Vendas.Domain.Events;
+
+namespace Vendas.Domain.Common.Base;
 public abstract class Entity
 {
     public Guid Id { get; protected set; }
@@ -48,5 +51,23 @@ public abstract class Entity
     public static bool operator !=(Entity left, Entity right)
     {
         return !(left == right);
+    }
+
+    private readonly List<IDomainEvent> _domainEvents = [];
+    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+
+    protected void AddDomainEvent(IDomainEvent domainEvent)
+    {
+        _domainEvents.Add(domainEvent);
+    }
+
+    public void RemoveDomainEvents(IDomainEvent domainEvent)
+    {
+        _domainEvents.Remove(domainEvent);
+    }
+
+    public void ClearDomainEvents()
+    {
+        _domainEvents.Clear();
     }
 }
