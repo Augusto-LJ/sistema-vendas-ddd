@@ -11,7 +11,6 @@
     <Folder Include="Catalogo\Events\" />
     <Folder Include="Catalogo\ValueObjects\" />
     <Folder Include="Clientes\Events\" />
-    <Folder Include="Clientes\ValueObjects\" />
   </ItemGroup>
 
 </Project>
