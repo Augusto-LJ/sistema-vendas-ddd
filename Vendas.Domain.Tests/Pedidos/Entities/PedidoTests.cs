@@ -2,11 +2,11 @@
 using System.Reflection;
 using Vendas.Domain.Common.Enums;
 using Vendas.Domain.Common.Exceptions;
-using Vendas.Domain.Entities;
-using Vendas.Domain.Events;
-using Vendas.Domain.ValueObjects;
+using Vendas.Domain.Pedidos.Entities;
+using Vendas.Domain.Pedidos.Events;
+using Vendas.Domain.Pedidos.ValueObjects;
 
-namespace Vendas.Domain.Tests.Entities;
+namespace Vendas.Domain.Tests.Pedidos.Entities;
 public class PedidoTests
 {
     private static EnderecoEntrega CriarEnderecoValido() => EnderecoEntrega.Criar("12345-789", "Rua Exemplo", "Ap exemplo", "Bairro Exemplo", "Cidade Exemplo", "Estado Exemplo", "País Exemplo");

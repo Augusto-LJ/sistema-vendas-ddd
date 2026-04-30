@@ -2,7 +2,7 @@
 using Vendas.Domain.Common.Exceptions;
 using Vendas.Domain.Common.Validations;
 
-namespace Vendas.Domain.Entities;
+namespace Vendas.Domain.Pedidos.Entities;
 public sealed class ItemPedido : Entity
 {
     public Guid ProdutoId { get; private set; }
@@ -71,6 +71,6 @@ public sealed class ItemPedido : Entity
 
     private void CalcularValorTotal()
     {
-        ValorTotal = (PrecoUnitario * Quantidade) - DescontoAplicado;
+        ValorTotal = PrecoUnitario * Quantidade - DescontoAplicado;
     }
 }

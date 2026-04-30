@@ -2,9 +2,9 @@
 using Vendas.Domain.Common.Enums;
 using Vendas.Domain.Common.Exceptions;
 using Vendas.Domain.Common.Validations;
-using Vendas.Domain.Events;
+using Vendas.Domain.Pedidos.Events;
 
-namespace Vendas.Domain.Entities;
+namespace Vendas.Domain.Pedidos.Entities;
 public sealed class Pagamento : Entity
 {
     public Guid PedidoId { get; private set; }

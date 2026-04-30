@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
 using Vendas.Domain.Common.Exceptions;
-using Vendas.Domain.ValueObjects;
+using Vendas.Domain.Pedidos.ValueObjects;
 
-namespace Vendas.Domain.Tests.ValueObjects;
+namespace Vendas.Domain.Tests.Pedidos.ValueObjects;
 public class EnderecoEntregaTests
 {
     [Fact]

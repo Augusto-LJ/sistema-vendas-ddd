@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
 using Vendas.Domain.Common.Exceptions;
-using Vendas.Domain.Entities;
+using Vendas.Domain.Pedidos.Entities;
 
-namespace Vendas.Domain.Tests.Entities;
+namespace Vendas.Domain.Tests.Pedidos.Entities;
 public class ItemPedidoTests
 {
     private static ItemPedido CriarItemValido(decimal preco = 100m, int quantidade = 2)
@@ -65,7 +65,7 @@ public class ItemPedidoTests
 
         // Assert
         item.DescontoAplicado.Should().Be(desconto);
-        item.ValorTotal.Should().Be((item.PrecoUnitario * item.Quantidade) - desconto);
+        item.ValorTotal.Should().Be(item.PrecoUnitario * item.Quantidade - desconto);
         item.DataAtualizacao.Should().NotBeNull();
     }
 
@@ -98,7 +98,7 @@ public class ItemPedidoTests
 
         // Assert
         item.Quantidade.Should().Be(5);
-        item.ValorTotal.Should().Be((item.PrecoUnitario * item.Quantidade) - item.DescontoAplicado);
+        item.ValorTotal.Should().Be(item.PrecoUnitario * item.Quantidade - item.DescontoAplicado);
         item.DataAtualizacao.Should().NotBeNull();
     }
 
@@ -129,7 +129,7 @@ public class ItemPedidoTests
 
         // Assert
         item.Quantidade.Should().Be(3);
-        item.ValorTotal.Should().Be((item.PrecoUnitario * item.Quantidade) - item.DescontoAplicado);
+        item.ValorTotal.Should().Be(item.PrecoUnitario * item.Quantidade - item.DescontoAplicado);
         item.DataAtualizacao.Should().NotBeNull();
     }
 
@@ -176,7 +176,7 @@ public class ItemPedidoTests
 
         // Assert
         item.PrecoUnitario.Should().Be(novoPreco);
-        item.ValorTotal.Should().Be((item.PrecoUnitario * item.Quantidade));
+        item.ValorTotal.Should().Be(item.PrecoUnitario * item.Quantidade);
         item.DataAtualizacao.Should().NotBeNull();
     }
 

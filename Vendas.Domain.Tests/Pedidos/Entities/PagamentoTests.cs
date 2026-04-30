@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
 using Vendas.Domain.Common.Enums;
 using Vendas.Domain.Common.Exceptions;
-using Vendas.Domain.Entities;
+using Vendas.Domain.Pedidos.Entities;
+using Vendas.Domain.Pedidos.Events;
 
-namespace Vendas.Domain.Tests.Entities;
+namespace Vendas.Domain.Tests.Pedidos.Entities;
 public class PagamentoTests
 {
     #region CriarPagamento
@@ -168,7 +169,7 @@ public class PagamentoTests
         pagamento.ConfirmarPagamento();
 
         // Assert
-        pagamento.DomainEvents.Should().ContainSingle(e => e is Events.PagamentoAprovadoEvent);
+        pagamento.DomainEvents.Should().ContainSingle(e => e is PagamentoAprovadoEvent);
     }
     #endregion
 
@@ -213,7 +214,7 @@ public class PagamentoTests
         pagamento.RecusarPagamento();
 
         // Assert
-        pagamento.DomainEvents.Should().ContainSingle(e => e is Events.PagamentoRejeitadoEvent);
+        pagamento.DomainEvents.Should().ContainSingle(e => e is PagamentoRejeitadoEvent);
     }
     #endregion
 }
