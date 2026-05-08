@@ -5,7 +5,7 @@ public sealed class RemoverItemDoPedidoCommandHandler(IPedidoRepository pedidoRe
 {
     private readonly IPedidoRepository _pedidoRepository = pedidoRepository;
 
-    public async Task<RemoverItemDoPedidoResultDto> HandleAsync(RemoverItemDoPedidoCommand command, CancellationToken cancellationToken)
+    public async Task<RemoverItemDoPedidoResultDto> HandleAsync(RemoverItemDoPedidoCommand command, CancellationToken cancellationToken = default)
     {
         var pedido = await _pedidoRepository.ObterPorIdAsync(command.PedidoId, cancellationToken);
 

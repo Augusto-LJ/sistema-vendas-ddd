@@ -5,7 +5,7 @@ public sealed class AdicionarItemAoPedidoCommandHandler(IPedidoRepository pedido
 {
     private readonly IPedidoRepository _pedidoRepository = pedidoRepository;
 
-    public async Task<AdicionarItemAoPedidoResultDto> HandleAsync(AdicionarItemAoPedidoCommand command, CancellationToken cancellationToken)
+    public async Task<AdicionarItemAoPedidoResultDto> HandleAsync(AdicionarItemAoPedidoCommand command, CancellationToken cancellationToken = default)
     {
         var pedido = await _pedidoRepository.ObterPorIdAsync(command.PedidoId, cancellationToken);
 
