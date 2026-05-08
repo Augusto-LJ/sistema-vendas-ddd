@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Vendas.Domain\Vendas.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Commands\Pedidos\CriarPedido\" />
-  </ItemGroup>
-
 </Project>
