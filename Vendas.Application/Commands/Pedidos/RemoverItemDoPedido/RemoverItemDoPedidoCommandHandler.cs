@@ -1,4 +1,5 @@
 ﻿using Vendas.Application.Abstractions.Persistence;
+using Vendas.Domain.Common.Exceptions;
 
 namespace Vendas.Application.Commands.Pedidos.RemoverItemDoPedido;
 public sealed class RemoverItemDoPedidoCommandHandler(IPedidoRepository pedidoRepository)
@@ -10,7 +11,7 @@ public sealed class RemoverItemDoPedidoCommandHandler(IPedidoRepository pedidoRe
         var pedido = await _pedidoRepository.ObterPorIdAsync(command.PedidoId, cancellationToken);
 
         if (pedido is null)
-            throw new InvalidOperationException("Pedido não encontrado.");
+            throw new DomainException("Pedido não encontrado.");
 
         pedido.RemoverItem(command.ItemId);
 
