@@ -1,4 +1,4 @@
-﻿using Vendas.Domain.Pedidos.Entities;
+﻿using Vendas.Domain.Pedidos;
 
 namespace Vendas.Application.Abstractions.Persistence;
 public interface IPedidoRepository
