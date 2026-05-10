@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
-using Vendas.Domain.Catalogo.Entities;
+using Vendas.Domain.Catalogo;
 using Vendas.Domain.Catalogo.Enums;
 using Vendas.Domain.Catalogo.Events;
 using Vendas.Domain.Catalogo.ValueObjects;
 using Vendas.Domain.Common.Exceptions;
 
-namespace Vendas.Domain.Tests.Catalogo.Entities;
+namespace Vendas.Domain.Tests.Catalogo;
 public class ProdutoTests
 {
     private Produto CriarProdutoValido(string nome = "Produto teste", string codigo = "Cod-001", decimal preco = 200m, int estoque = 10, string? descricao = null)

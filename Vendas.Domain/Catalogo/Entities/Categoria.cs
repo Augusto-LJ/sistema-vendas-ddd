@@ -2,7 +2,7 @@
 using Vendas.Domain.Common.Exceptions;
 using Vendas.Domain.Common.Validations;
 
-namespace Vendas.Domain.Catalogo.Entities;
+namespace Vendas.Domain.Catalogo;
 public sealed class Categoria : AggregateRoot
 {
     public string Nome { get; private set; }

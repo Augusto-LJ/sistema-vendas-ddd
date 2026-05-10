@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
 using System.Reflection;
 using Vendas.Domain.Common.Exceptions;
-using Vendas.Domain.Pedidos.Entities;
+using Vendas.Domain.Pedidos;
 using Vendas.Domain.Pedidos.Enums;
 using Vendas.Domain.Pedidos.Events;
 using Vendas.Domain.Pedidos.ValueObjects;
 
-namespace Vendas.Domain.Tests.Pedidos.Entities;
+namespace Vendas.Domain.Tests.Pedidos;
 public class PedidoTests
 {
     private static EnderecoEntrega CriarEnderecoValido() => EnderecoEntrega.Criar("12345-789", "Rua Exemplo", "Ap exemplo", "Bairro Exemplo", "Cidade Exemplo", "Estado Exemplo", "País Exemplo");

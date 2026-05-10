@@ -2,7 +2,7 @@
 using Vendas.Domain.Common.Exceptions;
 using Vendas.Domain.Common.Validations;
 
-namespace Vendas.Domain.Pedidos.Entities;
+namespace Vendas.Domain.Pedidos;
 public sealed class ItemPedido : Entity
 {
     public Guid ProdutoId { get; private set; }

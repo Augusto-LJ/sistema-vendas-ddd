@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
-using Vendas.Domain.Clientes.Entities;
+using Vendas.Domain.Clientes;
 using Vendas.Domain.Clientes.Enums;
 using Vendas.Domain.Clientes.Events;
 using Vendas.Domain.Clientes.ValueObjects;
 using Vendas.Domain.Common.Exceptions;
 
-namespace Vendas.Domain.Tests.Clientes.Entities;
+namespace Vendas.Domain.Tests.Clientes;
 public class ClienteTests
 {
     #region Métodos auxiliares

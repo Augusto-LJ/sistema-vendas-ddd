@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
 using Vendas.Domain.Common.Exceptions;
-using Vendas.Domain.Pedidos.Entities;
+using Vendas.Domain.Pedidos;
 
-namespace Vendas.Domain.Tests.Pedidos.Entities;
+namespace Vendas.Domain.Tests.Pedidos;
 public class ItemPedidoTests
 {
     private static ItemPedido CriarItemValido(decimal preco = 100m, int quantidade = 2)

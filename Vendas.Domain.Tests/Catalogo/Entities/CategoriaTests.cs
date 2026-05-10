@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
-using Vendas.Domain.Catalogo.Entities;
+using Vendas.Domain.Catalogo;
 using Vendas.Domain.Catalogo.Events;
 using Vendas.Domain.Common.Exceptions;
 
-namespace Vendas.Domain.Tests.Catalogo.Entities;
+namespace Vendas.Domain.Tests.Catalogo;
 public class CategoriaTests
 {
     #region CriarCategoria

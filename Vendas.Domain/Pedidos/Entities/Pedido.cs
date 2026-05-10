@@ -5,7 +5,7 @@ using Vendas.Domain.Pedidos.Enums;
 using Vendas.Domain.Pedidos.Events;
 using Vendas.Domain.Pedidos.ValueObjects;
 
-namespace Vendas.Domain.Pedidos.Entities;
+namespace Vendas.Domain.Pedidos;
 public sealed class Pedido : AggregateRoot
 {
     public Guid ClienteId { get; private set; }

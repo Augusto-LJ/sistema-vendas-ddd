@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using Vendas.Domain.Clientes.Entities;
+using Vendas.Domain.Clientes;
 using Vendas.Domain.Common.Exceptions;
 
-namespace Vendas.Domain.Tests.Clientes.Entities;
+namespace Vendas.Domain.Tests.Clientes;
 public class EnderecoTests
 {
     private static Endereco CriarEnderecoValido()
