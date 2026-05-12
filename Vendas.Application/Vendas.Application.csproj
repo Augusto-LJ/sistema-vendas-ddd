@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\CatalogoCommands\CategoriaCommands\AtivarCategoria\" />
-    <Folder Include="Commands\CatalogoCommands\CategoriaCommands\CriarCategoria\" />
-    <Folder Include="Commands\CatalogoCommands\CategoriaCommands\InativarCategoria\" />
-    <Folder Include="Commands\CatalogoCommands\CategoriaCommands\RenomearCategoria\" />
     <Folder Include="Commands\CatalogoCommands\ClientesCommands\" />
   </ItemGroup>
 
