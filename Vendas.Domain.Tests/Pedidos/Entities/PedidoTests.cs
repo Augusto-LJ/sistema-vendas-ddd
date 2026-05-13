@@ -9,7 +9,7 @@ using Vendas.Domain.Pedidos.ValueObjects;
 namespace Vendas.Domain.Tests.Pedidos;
 public class PedidoTests
 {
-    private static EnderecoEntrega CriarEnderecoValido() => EnderecoEntrega.Criar("12345-789", "Rua Exemplo", "Ap exemplo", "Bairro Exemplo", "Cidade Exemplo", "Estado Exemplo", "País Exemplo");
+    private static EnderecoEntrega CriarEnderecoValido() => EnderecoEntrega.Criar("12345-789", "Rua Exemplo", "999", "Ap exemplo", "Bairro Exemplo", "Cidade Exemplo", "Estado Exemplo", "País Exemplo");
 
     private static readonly Guid ClienteIdValido = Guid.NewGuid();
     private static readonly Guid ProdutoIdValido = Guid.NewGuid();
@@ -31,7 +31,6 @@ public class PedidoTests
         var pedido = Pedido.Criar(ClienteIdValido, endereco);
 
         // Assert
-        pedido.Should().NotBeNull();
         pedido.ClienteId.Should().Be(ClienteIdValido);
         pedido.EnderecoEntrega.Should().BeEquivalentTo(endereco);
         pedido.StatusPedido.Should().Be(StatusPedido.Pendente);
@@ -201,7 +200,7 @@ public class PedidoTests
     {
         // Arrange
         var pedido = Pedido.Criar(ClienteIdValido, CriarEnderecoValido()); // O status inicial é Pendente
-        var novoEndereco = EnderecoEntrega.Criar("00000-000", "Logradouro", "Complemento", "Bairro", "Cidade", "Estado", "País");
+        var novoEndereco = EnderecoEntrega.Criar("00000-000", "Logradouro", "Numero", "Complemento", "Bairro", "Cidade", "Estado", "País");
 
         // Act
         pedido.AtualizarEnderecoEntrega(novoEndereco);
@@ -221,7 +220,7 @@ public class PedidoTests
         // Arrange
         var pedido = Pedido.Criar(ClienteIdValido, CriarEnderecoValido());
         SetStatusPedido(pedido, status);
-        var novoEndereco = EnderecoEntrega.Criar("00000-000", "Logradouro", "Complemento", "Bairro", "Cidade", "Estado", "País");
+        var novoEndereco = EnderecoEntrega.Criar("00000-000", "Logradouro", "Numero", "Complemento", "Bairro", "Cidade", "Estado", "País");
 
         // Act
         Action act = () => pedido.AtualizarEnderecoEntrega(novoEndereco);

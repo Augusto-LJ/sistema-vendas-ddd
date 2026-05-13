@@ -1,8 +1,8 @@
 ﻿using Vendas.Domain.Pedidos.ValueObjects;
 
 namespace Vendas.Application.Commands.PedidosCommands.CriarPedido;
-public sealed class CriarPedidoCommand(Guid clienteId, EnderecoEntrega enderecoEntrega)
+public sealed class CriarPedidoCommand(Guid clienteId, Guid enderecoId)
 {
     public Guid ClienteId { get; } = clienteId;
-    public EnderecoEntrega EnderecoEntrega { get; } = enderecoEntrega;
+    public Guid EnderecoId { get; } = enderecoId;
 }

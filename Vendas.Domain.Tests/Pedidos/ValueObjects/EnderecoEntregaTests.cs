@@ -11,6 +11,7 @@ public class EnderecoEntregaTests
         // Arrange
         var cep = "12345-678";
         var logradouro = "Rua Exemplo";
+        var numero = "999";
         var complemento = "Apto 101";
         var bairro = "Centro";
         var cidade = "São Paulo";
@@ -18,12 +19,13 @@ public class EnderecoEntregaTests
         var pais = "Brasil";
 
         // Act
-        var endereco = EnderecoEntrega.Criar(cep, logradouro, complemento, bairro, cidade, estado, pais);
+        var endereco = EnderecoEntrega.Criar(cep, logradouro, numero, complemento, bairro, cidade, estado, pais);
 
         // Assert
         endereco.Should().NotBeNull();
         endereco.Cep.Should().Be(cep);
         endereco.Logradouro.Should().Be(logradouro);
+        endereco.Numero.Should().Be(numero);
         endereco.Complemento.Should().Be(complemento);
         endereco.Bairro.Should().Be(bairro);
         endereco.Cidade.Should().Be(cidade);
@@ -39,6 +41,7 @@ public class EnderecoEntregaTests
     {
         // Arrange
         var logradouro = "Rua Exemplo";
+        var numero = "999";
         var complemento = "Apto 101";
         var bairro = "Centro";
         var cidade = "São Paulo";
@@ -46,7 +49,7 @@ public class EnderecoEntregaTests
         var pais = "Brasil";
 
         // Act
-        Action act = () => EnderecoEntrega.Criar(cepInvalido, logradouro, complemento, bairro, cidade, estado, pais);
+        Action act = () => EnderecoEntrega.Criar(cepInvalido, logradouro, numero, complemento, bairro, cidade, estado, pais);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage("CEP inválido. Deve estar no formato 00000-000");
@@ -56,8 +59,8 @@ public class EnderecoEntregaTests
     public void Criar_DeveCriarInstanciasIguais_QuandoInformacoesForemIdenticas()
     {
         // Arrange
-        var endereco1 = EnderecoEntrega.Criar("12345-678", "Rua Exemplo", "Apto 101", "Centro", "São Paulo", "SP", "Brasil");
-        var endereco2 = EnderecoEntrega.Criar("12345-678", "Rua Exemplo", "Apto 101", "Centro", "São Paulo", "SP", "Brasil");
+        var endereco1 = EnderecoEntrega.Criar("12345-678", "Rua Exemplo", "999", "Apto 101", "Centro", "São Paulo", "SP", "Brasil");
+        var endereco2 = EnderecoEntrega.Criar("12345-678", "Rua Exemplo", "999", "Apto 101", "Centro", "São Paulo", "SP", "Brasil");
 
         // Act
         var enderecosSaoIguais = endereco1 == endereco2;
@@ -71,8 +74,8 @@ public class EnderecoEntregaTests
     public void Criar_DeveCriarInstanciasDiferentes_QuandoInformacoesForemDiferentes()
     {
         // Arrange
-        var endereco1 = EnderecoEntrega.Criar("12345-678", "Rua Exemplo", "Apto 101", "Centro", "São Paulo", "SP", "Brasil");
-        var endereco2 = EnderecoEntrega.Criar("87654-321", "Rua Diferente", "Apto 101", "Centro", "São Paulo", "SP", "Brasil");
+        var endereco1 = EnderecoEntrega.Criar("12345-678", "Rua Exemplo", "999", "Apto 101", "Centro", "São Paulo", "SP", "Brasil");
+        var endereco2 = EnderecoEntrega.Criar("87654-321", "Rua Diferente", "999", "Apto 101", "Centro", "São Paulo", "SP", "Brasil");
         // Act
         var enderecosSaoIguais = endereco1 == endereco2;
 
@@ -85,7 +88,7 @@ public class EnderecoEntregaTests
     public void Criar_DeveCriarInstanciaImutavel_AposCriacao()
     {
         // Arrange
-        var endereco = EnderecoEntrega.Criar("12345-678", "Rua Exemplo", "Apto 101", "Centro", "São Paulo", "SP", "Brasil");
+        var endereco = EnderecoEntrega.Criar("12345-678", "Rua Exemplo", "999", "Apto 101", "Centro", "São Paulo", "SP", "Brasil");
 
         // Act não aplicável
 
@@ -94,34 +97,36 @@ public class EnderecoEntregaTests
     }
 
     [Theory]
-    [InlineData(null, "Rua Exemplo", "Apto 101", "Centro", "São Paulo", "SP", "Brasil")]
-    [InlineData("12345-678", null, "Apto 101", "Centro", "São Paulo", "SP", "Brasil")]
-    [InlineData("12345-678", "Rua Exemplo", null, "Centro", "São Paulo", "SP", "Brasil")]
-    [InlineData("12345-678", "Rua Exemplo", "Apto 101", null, "São Paulo", "SP", "Brasil")]
-    [InlineData("12345-678", "Rua Exemplo", "Apto 101", "Centro", null, "SP", "Brasil")]
-    [InlineData("12345-678", "Rua Exemplo", "Apto 101", "Centro", "São Paulo", null, "Brasil")]
-    [InlineData("12345-678", "Rua Exemplo", "Apto 101", "Centro", "São Paulo", "SP", null)]
-    public void Criar_DeveLancarDomainException_QuandoAlgumaInformacaoObrigatoriaForNula(string cep, string logradouro, string complemento, string bairro, string cidade, string estado, string pais)
+    [InlineData(null, "Rua Exemplo", "999", "Apto 101", "Centro", "São Paulo", "SP", "Brasil")]
+    [InlineData("12345-678", null, "999", "Apto 101", "Centro", "São Paulo", "SP", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", null, "Apto 101", "Centro", "São Paulo", "SP", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "999", null, "Centro", "São Paulo", "SP", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "999", "Apto 101", null, "São Paulo", "SP", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "999", "Apto 101", "Centro", null, "SP", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "999", "Apto 101", "Centro", "São Paulo", null, "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "999", "Apto 101", "Centro", "São Paulo", "SP", null)]
+    public void Criar_DeveLancarDomainException_QuandoAlgumaInformacaoObrigatoriaForNula(string cep, string logradouro, string numero, string complemento, string bairro, string cidade, string estado, string pais)
     {
         // Act
-        Action act = () => EnderecoEntrega.Criar(cep, logradouro, complemento, bairro, cidade, estado, pais);
+        Action act = () => EnderecoEntrega.Criar(cep, logradouro, numero, complemento, bairro, cidade, estado, pais);
 
         // Assert
         act.Should().Throw<DomainException>();
     }
 
     [Theory]
-    [InlineData("", "Rua Exemplo", "Apto 101", "Centro", "São Paulo", "SP", "Brasil")]
-    [InlineData("12345-678", "", "Apto 101", "Centro", "São Paulo", "SP", "Brasil")]
-    [InlineData("12345-678", "Rua Exemplo", "", "Centro", "São Paulo", "SP", "Brasil")]
-    [InlineData("12345-678", "Rua Exemplo", "Apto 101", "", "São Paulo", "SP", "Brasil")]
-    [InlineData("12345-678", "Rua Exemplo", "Apto 101", "Centro", "", "SP", "Brasil")]
-    [InlineData("12345-678", "Rua Exemplo", "Apto 101", "Centro", "São Paulo", "", "Brasil")]
-    [InlineData("12345-678", "Rua Exemplo", "Apto 101", "Centro", "São Paulo", "SP", "")]
-    public void Criar_DeveLancarDomainException_QuandoAlgumaInformacaoObrigatoriaForStringVazia(string cep, string logradouro, string complemento, string bairro, string cidade, string estado, string pais)
+    [InlineData("", "Rua Exemplo", "999", "Apto 101", "Centro", "São Paulo", "SP", "Brasil")]
+    [InlineData("12345-678", "", "999", "Apto 101", "Centro", "São Paulo", "SP", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "", "Apto 101", "Centro", "São Paulo", "SP", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "999", "", "Centro", "São Paulo", "SP", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "999", "Apto 101", "", "São Paulo", "SP", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "999", "Apto 101", "Centro", "", "SP", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "999", "Apto 101", "Centro", "São Paulo", "", "Brasil")]
+    [InlineData("12345-678", "Rua Exemplo", "999", "Apto 101", "Centro", "São Paulo", "SP", "")]
+    public void Criar_DeveLancarDomainException_QuandoAlgumaInformacaoObrigatoriaForStringVazia(string cep, string logradouro, string numero, string complemento, string bairro, string cidade, string estado, string pais)
     {
         // Act
-        Action act = () => EnderecoEntrega.Criar(cep, logradouro, complemento, bairro, cidade, estado, pais);
+        Action act = () => EnderecoEntrega.Criar(cep, logradouro, numero, complemento, bairro, cidade, estado, pais);
 
         // Assert
         act.Should().Throw<DomainException>();
