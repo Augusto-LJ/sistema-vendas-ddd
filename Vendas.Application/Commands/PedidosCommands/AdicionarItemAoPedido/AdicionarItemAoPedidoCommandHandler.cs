@@ -1,11 +1,14 @@
 ﻿using Vendas.Application.Abstractions.Persistence;
 using Vendas.Application.Commands.PedidosCommands.AdicionarItemAoPedido;
 using Vendas.Domain.Common.Exceptions;
+using Vendas.Domain.Pedidos.Integration.Catalogo;
 
 namespace Vendas.Application.Commands.Pedidos.AdicionarItemAoPedido;
-public sealed class AdicionarItemAoPedidoCommandHandler(IPedidoRepository pedidoRepository)
+public sealed class AdicionarItemAoPedidoCommandHandler(IPedidoRepository pedidoRepository, ICatalogoGateway catalogoGateway, CatalogoAcl catalogoAcl)
 {
     private readonly IPedidoRepository _pedidoRepository = pedidoRepository;
+    private readonly ICatalogoGateway _catalogoGateway = catalogoGateway;
+    private readonly CatalogoAcl _catalogoAcl = catalogoAcl;
 
     public async Task<AdicionarItemAoPedidoResultDto> HandleAsync(AdicionarItemAoPedidoCommand command, CancellationToken cancellationToken = default)
     {
@@ -14,7 +17,14 @@ public sealed class AdicionarItemAoPedidoCommandHandler(IPedidoRepository pedido
         if (pedido is null)
             throw new DomainException("Pedido não encontrado.");
 
-        pedido.AdicionarItem(command.ProdutoId, command.NomeProduto, command.PrecoUnitario, command.Quantidade);
+        var produtoDto = await _catalogoGateway.ObterProdutoPorIdAsync(command.ProdutoId, cancellationToken);
+
+        if (produtoDto is null)
+            throw new DomainException("Produto não encontrado");
+
+        var (nomeProduto, precoUnitario) = _catalogoAcl.TraduzirProduto (produtoDto);
+
+        pedido.AdicionarItem(command.ProdutoId, nomeProduto, precoUnitario, command.Quantidade);
 
         await _pedidoRepository.AtualizarAsync(pedido, cancellationToken);
 

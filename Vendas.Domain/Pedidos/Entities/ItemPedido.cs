@@ -60,15 +60,6 @@ public sealed class ItemPedido : Entity
         CalcularValorTotal();
     }
 
-    public void AtualizarPrecoUnitario(decimal novoPreco)
-    {
-        Guard.Against<DomainException>(novoPreco <= 0, "O preço unitário deve ser maior que zero");
-
-        PrecoUnitario = novoPreco;
-        SetDataAtualizacao();
-        CalcularValorTotal();
-    }
-
     private void CalcularValorTotal()
     {
         ValorTotal = PrecoUnitario * Quantidade - DescontoAplicado;

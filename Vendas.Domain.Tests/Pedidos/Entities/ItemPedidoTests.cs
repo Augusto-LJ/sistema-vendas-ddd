@@ -163,39 +163,6 @@ public class ItemPedidoTests
     }
     #endregion
 
-    #region Atualização de preço
-    [Fact]
-    public void AtualizarPrecoUnitario_DeveAtualizarPrecoComSucesso_QuandoValorForValido()
-    {
-        // Arrange
-        var item = CriarItemValido(preco: 50m, quantidade: 2);
-        var novoPreco = 80m;
-
-        // Act
-        item.AtualizarPrecoUnitario(novoPreco);
-
-        // Assert
-        item.PrecoUnitario.Should().Be(novoPreco);
-        item.ValorTotal.Should().Be(item.PrecoUnitario * item.Quantidade);
-        item.DataAtualizacao.Should().NotBeNull();
-    }
-
-    [Theory]
-    [InlineData(0)]
-    [InlineData(-1)]
-    public void AtualizarPrecoUnitario_DeveLancarDomainException_QuandoValorForInvalido(decimal novoPreco)
-    {
-        // Arrange
-        var item = CriarItemValido();
-
-        // Act
-        Action act = () => item.AtualizarPrecoUnitario(novoPreco);
-
-        // Assert
-        act.Should().Throw<DomainException>().WithMessage("O preço unitário deve ser maior que zero");
-    }
-    #endregion
-
     #region Igualdade entre entidades
     [Fact]
     public void Equals_DeveRetornarTrue_QuandoItensForemIguais()
