@@ -6,7 +6,7 @@ public sealed class MarcarPedidoComoEmSeparacaoCommandHandler(IPedidoRepository 
 {
     private readonly IPedidoRepository _pedidoRepository = pedidoRepository;
 
-    public async Task<MarcarPedidoComoEmSeparacaoResultDto> Handle(MarcarPedidoComoEmSeparacaoCommand command, CancellationToken cancellationToken = default)
+    public async Task<MarcarPedidoComoEmSeparacaoResultDto> HandleAsync(MarcarPedidoComoEmSeparacaoCommand command, CancellationToken cancellationToken = default)
     {
         var pedido = await _pedidoRepository.ObterPorIdAsync(command.PedidoId, cancellationToken);
 

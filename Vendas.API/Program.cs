@@ -1,3 +1,6 @@
+using Vendas.API.Endpoints.Pedidos;
+using Vendas.Infrastructure.Fakes;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +10,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddFakeInfrastructure();
 var app = builder.Build();
+
+app.MapPedidosEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
