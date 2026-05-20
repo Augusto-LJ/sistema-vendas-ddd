@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Vendas.Application.Abstractions.Persistence;
 using Vendas.Application.Commands.Pedidos.AdicionarItemAoPedido;
 using Vendas.Application.Commands.PedidosCommands.AdicionarItemAoPedido;
 using Vendas.Application.Commands.PedidosCommands.CancelarPedido;
@@ -55,7 +56,7 @@ public static class PedidosEndpoints
         })).WithSummary("Exibe os IDs dos dados disponíveis nos Fakes para usar nos testes").WithName("GetFakePedidoIds");
 
 
-        pedidosGroup.MapGet("/", async (FakePedidoRepository repository, CancellationToken cancellationToken) =>
+        pedidosGroup.MapGet("/", async (IPedidoRepository repository, CancellationToken cancellationToken) =>
         {
             var pedidos = await repository.ListarTodosAsync(cancellationToken);
 
@@ -74,7 +75,7 @@ public static class PedidosEndpoints
         }).WithSummary("Lista todos os pedidos em memória");
 
 
-        pedidosGroup.MapGet("/{id:guid}", async (Guid id, FakePedidoRepository repository, CancellationToken cancellationToken) =>
+        pedidosGroup.MapGet("/{id:guid}", async (Guid id, IPedidoRepository repository, CancellationToken cancellationToken) =>
         {
             var pedido = await repository.ObterPorIdAsync(id, cancellationToken);
 
@@ -180,7 +181,7 @@ public static class PedidosEndpoints
         }).WithSummary("Inicia o processo de pagamento para um pedido");
 
 
-        pedidosGroup.MapPost("/{id:guid}/pagamento/confirmacao", async (Guid id, ConfirmarPagamentoRequest request, FakePedidoRepository repository, CancellationToken cancellationToken) =>
+        pedidosGroup.MapPost("/{id:guid}/pagamento/confirmacao", async (Guid id, ConfirmarPagamentoRequest request, IPedidoRepository repository, CancellationToken cancellationToken) =>
         {
             try
             {
