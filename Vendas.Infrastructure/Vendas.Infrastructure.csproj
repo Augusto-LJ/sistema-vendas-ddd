@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="Gateways\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
