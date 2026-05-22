@@ -1,16 +1,18 @@
 using Vendas.API.Endpoints.Pedidos;
-using Vendas.Infrastructure.Fakes;
+using Vendas.Infrastructure.Extensions;
+using Vendas.Infrastructure.Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddFakeInfrastructure();
+builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddApplication();
+builder.Services.AddFakeIntegration();
+
 var app = builder.Build();
 
 app.MapPedidosEndpoints();
@@ -20,6 +22,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<VendasDbContext>();
+    db.Database.EnsureCreated();
 }
 
 app.UseHttpsRedirection();
