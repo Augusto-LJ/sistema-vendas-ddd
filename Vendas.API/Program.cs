@@ -22,12 +22,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<VendasDbContext>();
-    db.Database.EnsureCreated();
+    using (var scope = app.Services.CreateScope()) // Em produção, esta abordagem de criar o BD ao iniciar a aplicação não é recomendada. O ideal é usar migrações e um processo de implantação adequado.
+    {
+        var db = scope.ServiceProvider.GetRequiredService<VendasDbContext>();
+        db.Database.EnsureCreated();
+    }
 }
 
 app.UseHttpsRedirection();
