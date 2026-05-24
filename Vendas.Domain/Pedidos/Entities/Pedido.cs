@@ -29,13 +29,14 @@ public sealed class Pedido : AggregateRoot
         EnderecoEntrega = enderecoEntrega;
         StatusPedido = StatusPedido.Pendente;
         ValorTotal = 0m;
-
-        GerarNumeroPedido();
+        DataAtualizacao = DateTime.UtcNow;
     }
 
     public static Pedido Criar(Guid clienteId, EnderecoEntrega enderecoEntrega)
     {
-        return new Pedido(clienteId, enderecoEntrega);
+        var pedido = new Pedido(clienteId, enderecoEntrega);
+        pedido.GerarNumeroPedido();
+        return pedido;
     }
 
     public void AdicionarItem(Guid produtoId, string nomeProduto, decimal precoUnitario, int quantidade)

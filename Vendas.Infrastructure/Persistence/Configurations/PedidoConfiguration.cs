@@ -11,6 +11,9 @@ public sealed class PedidoConfiguration : IEntityTypeConfiguration<Pedido>
 
         builder.HasKey(p => p.Id);
 
+        builder.Property(p => p.Id)
+            .ValueGeneratedNever();
+            
         builder.Property(p => p.NumeroPedido)
             .IsRequired()
             .HasMaxLength(20);
