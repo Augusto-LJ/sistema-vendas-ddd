@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 using Vendas.Application.Abstractions.Persistence;
 using Vendas.Application.Commands.Pedidos.AdicionarItemAoPedido;
 using Vendas.Application.Commands.PedidosCommands.AdicionarItemAoPedido;
@@ -8,6 +9,7 @@ using Vendas.Application.Commands.PedidosCommands.IniciarPagamento;
 using Vendas.Application.Commands.PedidosCommands.MarcarPedidoComoEmSeparacao;
 using Vendas.Application.Commands.PedidosCommands.MarcarPedidoComoEntregue;
 using Vendas.Application.Commands.PedidosCommands.MarcarPedidoComoEnviado;
+using Vendas.Application.Queries.Pedidos.ListarPedidosResumo;
 using Vendas.Domain.Clientes;
 using Vendas.Domain.Common.Exceptions;
 using Vendas.Domain.Pedidos.Enums;
@@ -56,20 +58,9 @@ public static class PedidosEndpoints
         })).WithSummary("Exibe os IDs dos dados disponíveis nos Fakes para usar nos testes").WithName("GetFakePedidoIds");
 
 
-        pedidosGroup.MapGet("/", async (IPedidoRepository repository, CancellationToken cancellationToken) =>
+        pedidosGroup.MapGet("/", async ([FromServices] ListarPedidosResumoQueryHandler handler, CancellationToken cancellationToken) =>
         {
-            var pedidos = await repository.ListarTodosAsync(cancellationToken);
-
-            var resultado = pedidos.Select(p => new
-            {
-                p.Id,
-                p.NumeroPedido,
-                p.ClienteId,
-                p.ValorTotal,
-                Status = p.StatusPedido.ToString(),
-                p.DataCriacao,
-                TotalItens = p.Itens.Count,
-            });
+            var resultado = await handler.HandleAsync(new ListarPedidosResumoQuery(), cancellationToken);
 
             return Results.Ok(resultado);
         }).WithSummary("Lista todos os pedidos em memória");

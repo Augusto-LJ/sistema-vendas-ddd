@@ -16,16 +16,6 @@ public sealed class PedidoRepository(VendasDbContext context) : IPedidoRepositor
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
-    public async Task<IReadOnlyList<Pedido>> ListarTodosAsync(CancellationToken cancellationToken = default)
-    {
-        return await _context.Pedidos
-            .Include(p => p.Itens)
-            .Include(p => p.Pagamentos)
-            .AsSplitQuery()
-            .AsNoTracking()
-            .ToListAsync(cancellationToken);
-    }
-
     public async Task AdicionarAsync(Pedido pedido, CancellationToken cancellationToken = default)
     {
         await _context.Pedidos.AddAsync(pedido, cancellationToken);
