@@ -9,6 +9,7 @@ public abstract class Entity
 
     protected Entity()
     {
+        Id = Guid.NewGuid();
         DataCriacao = DateTime.UtcNow;
     }
 

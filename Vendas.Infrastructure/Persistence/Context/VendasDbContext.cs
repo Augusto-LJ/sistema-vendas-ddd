@@ -14,6 +14,7 @@ public sealed class VendasDbContext(DbContextOptions<VendasDbContext> options) :
         {
             item.ToTable("ItensPedido");
             item.HasKey(i => i.Id);
+            item.Property(p => p.Id).ValueGeneratedNever();
             item.Property<Guid>("PedidoId").IsRequired();
             item.Property(i => i.DataAtualizacao).IsRequired(false);
             item.Ignore(i => i.DomainEvents);
@@ -27,6 +28,7 @@ public sealed class VendasDbContext(DbContextOptions<VendasDbContext> options) :
         {
             pagamento.ToTable("Pagamentos");
             pagamento.HasKey(p => p.Id);
+            pagamento.Property(p => p.Id).ValueGeneratedNever();
             pagamento.Property(p => p.DataAtualizacao).IsRequired(false);
             pagamento.Ignore(p => p.DomainEvents);
             pagamento.Property(p => p.Valor).HasPrecision(18, 2);
