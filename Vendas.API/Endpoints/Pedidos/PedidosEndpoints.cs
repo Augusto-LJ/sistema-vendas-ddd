@@ -9,7 +9,10 @@ using Vendas.Application.Commands.PedidosCommands.IniciarPagamento;
 using Vendas.Application.Commands.PedidosCommands.MarcarPedidoComoEmSeparacao;
 using Vendas.Application.Commands.PedidosCommands.MarcarPedidoComoEntregue;
 using Vendas.Application.Commands.PedidosCommands.MarcarPedidoComoEnviado;
+using Vendas.Application.Queries.Pedidos.ListarPedidosPagamentosPorStatus;
 using Vendas.Application.Queries.Pedidos.ListarPedidosResumo;
+using Vendas.Application.Queries.Pedidos.ListarPedidosResumoPorCliente;
+using Vendas.Application.Queries.Pedidos.ObterPedidoCompletoPorId;
 using Vendas.Domain.Clientes;
 using Vendas.Domain.Common.Exceptions;
 using Vendas.Domain.Pedidos.Enums;
@@ -66,54 +69,31 @@ public static class PedidosEndpoints
         }).WithSummary("Lista todos os pedidos em memória");
 
 
-        pedidosGroup.MapGet("/{id:guid}", async (Guid id, IPedidoRepository repository, CancellationToken cancellationToken) =>
+        pedidosGroup.MapGet("/{id:guid}", async (Guid id, [FromServices] ObterPedidoCompletoPorIdQueryHandler handler, CancellationToken cancellationToken) =>
         {
-            var pedido = await repository.ObterPorIdAsync(id, cancellationToken);
+            var resultado = await handler.HandleAsync(new ObterPedidoCompletoPorIdQuery(id), cancellationToken);
 
-            if (pedido is null)
-                return Results.NotFound();
-
-            var resultado = new
-            {
-                pedido.Id,
-                pedido.NumeroPedido,
-                pedido.ClienteId,
-                pedido.ValorTotal,
-                Status = pedido.StatusPedido.ToString(),
-                pedido.DataCriacao,
-                pedido.DataAtualizacao,
-                Endereco = new
-                {
-                    pedido.EnderecoEntrega.Logradouro,
-                    pedido.EnderecoEntrega.Numero,
-                    pedido.EnderecoEntrega.Bairro,
-                    pedido.EnderecoEntrega.Cidade,
-                    pedido.EnderecoEntrega.Estado,
-                    pedido.EnderecoEntrega.Cep
-                },
-                Itens = pedido.Itens.Select(i => new
-                {
-                    i.Id,
-                    i.ProdutoId,
-                    i.NomeProduto,
-                    i.PrecoUnitario,
-                    i.Quantidade,
-                    i.ValorTotal
-                }),
-                Pagamentos = pedido.Pagamentos.Select(pg => new
-                {
-                    pg.Id,
-                    Metodo = pg.MetodoPagamento.ToString(),
-                    Status = pg.StatusPagamento.ToString(),
-                    pg.Valor,
-                    pg.CodigoTransacao,
-                    pg.DataPagamento
-                })
-            };
-
-            return Results.Ok(resultado);
+            return resultado is null ? Results.NotFound() : Results.Ok(resultado);
 
         }).WithSummary("Retorna detalhes completos de um pedido filtrando por seu ID");
+
+
+        pedidosGroup.MapGet("/clientes/{clienteId:guid}", async (Guid clienteId, [FromServices] ListarPedidosResumoPorClienteQueryHandler handler, CancellationToken cancellationToken) =>
+        {
+            var resultado = await handler.HandleAsync(new ListarPedidosResumoPorClienteQuery(clienteId), cancellationToken);
+
+            return Results.Ok(resultado);
+        }).WithSummary("Lista os pedidos de um cliente específico filtrando por seu ID");
+
+
+        pedidosGroup.MapGet("/pagamentos", async ([FromQuery] StatusPagamento? status, [FromServices] ListarPedidosPagamentosPorStatusQueryHandler handler, CancellationToken cancellationToken) =>
+        {
+            if (status is null)
+                return Results.BadRequest(new { erro = "Status inválido. Valores aceitos: Pendente (1), Aprovado (2), Recusado (3)" });
+
+            var resultado = await handler.HandleAsync(new ListarPedidosPagamentosPorStatusQuery(status.Value), cancellationToken);
+            return Results.Ok(resultado);
+        }).WithSummary("Lista os pagamentos dos pedidos filtrando por status");
 
 
         pedidosGroup.MapPost("/", async (CriarPedidoRequest request, CriarPedidoCommandHandler handler, CancellationToken cancellationToken) => 
